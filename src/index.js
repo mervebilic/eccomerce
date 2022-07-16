@@ -1,13 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './reset.css';
+
+import { QueryClient, QueryClientProvider} from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
+
+import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const queryClient = new QueryClient({
+defaultOptions: {
+  queries : {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+},
+}
+});
+
+ReactDOM.render(
   <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+    <ChakraProvider>
     <App />
+    </ChakraProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
